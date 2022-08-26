@@ -12,9 +12,9 @@ bool check = false;
 
 Future<void> RefreshToken(BuildContext context) async {
 
-  var url = Uri.http('${serverHttp}:8080', '/token/reissue/accessToken');
+  var url = Uri.http('${serverHttp}:8080', '/member/reissue');
 
-  final data = jsonEncode({'email': email, 'refreshToken': refreshToken});
+  final data = jsonEncode({'accessToken': authToken, 'refreshToken': refreshToken});
 
   var response = await http.post(url, body: data, headers: {'Accept': 'application/json', "content-type": "application/json"} );
 

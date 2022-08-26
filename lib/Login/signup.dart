@@ -20,16 +20,15 @@ class _SignUpPageState extends State<SignUpPage> {
   late String _name;
   late String _pass;
 
-  late String _emailAuthCode;
-
   void validateAndSignUp() {
-    if (_formKey.currentState!.validate()) {
+    final form = _formKey.currentState;
+    if (form!.validate()) {
+      form.save();
+      print('Form is valid: $_id, name: $_name, password: $_pass');
+
       signUp(_id, _name, _pass);
-      Navigator.pop(context);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
-      );
+    } else {
+      print('Form is invalid: $_id, name: $_name, password: $_pass');
     }
   }
 
@@ -52,7 +51,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
       var body = jsonDecode(response.body);
 
-      if(body["success"] == "true"){
+      if(body["success"] == true){
         _showDialog("회원가입 성공", "회원가입에 성공했습니다.");
       }
       else{
@@ -63,8 +62,9 @@ class _SignUpPageState extends State<SignUpPage> {
       print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
 
       var body = jsonDecode(response.body);
+      dynamic data=body["error"];
 
-      if(body["success"] == "false" && body["succoess"]=="DUPLICATED"){
+      if(body["success"] == false && data["errorName"]=="DUPLICATED"){
         _showDialog("회원가입 실패", "이미 회원가입한 아이디입니다.");
       }
       else{
@@ -124,32 +124,32 @@ class _SignUpPageState extends State<SignUpPage> {
                             Container(
                               child: Column(
                                 children: [
-                                  new TextFormField(
+                                  TextFormField(
                                     decoration: new InputDecoration(labelText: '아이디'),
                                     validator: (value) =>
                                     value!.isEmpty ? '아이디를 입력해주세요' : null,
                                     onSaved: (value) => _id = value!,
                                   ),
-                                  new TextFormField(
+                                  TextFormField(
                                     decoration: new InputDecoration(labelText: '이름'),
                                     validator: (value) =>
                                     value!.isEmpty ? '이름을 입력해주세요' : null,
                                     onSaved: (value) => _name = value!,
                                   ),
-                                  new TextFormField(
+                                  TextFormField(
                                     obscureText: true,
                                     decoration: new InputDecoration(labelText: '비밀번호'),
                                     validator: (value) =>
-                                    value!.isEmpty ? '비밀번호를 입력해주세요' : null,
+                                    value!.isEmpty ? '비밀번호를 입력해주세요' :null,
                                     onSaved: (value) => _pass = value!,
                                   ),
-                                  new TextFormField(
-                                    obscureText: true,
-                                    decoration: new InputDecoration(labelText: '비밀번호 확인'),
-                                    validator: (value) =>
-                                    value!.isEmpty ? '비밀번호가 확인되지 않았습니다' :
-                                    value!= _pass? "비밀번호가 일치하지 않습니다." :null,
-                                  ),
+                                  // TextFormField(
+                                  //   obscureText: true,
+                                  //   decoration: new InputDecoration(labelText: '비밀번호 확인'),
+                                  //   validator: (value) =>
+                                  //   value!.isEmpty ? '비밀번호가 확인되지 않았습니다' :
+                                  //   value != _pass? "비밀번호가 일치하지 않습니다." :null,
+                                  // ),
                                 ],
                               ),
                             ),
@@ -170,6 +170,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 ),
                                 onPressed: () {
                                   validateAndSignUp();
+                                  print("pass"+_pass);
                                 },
                               ),
                               height: 45,

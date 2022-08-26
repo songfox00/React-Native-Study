@@ -11,7 +11,7 @@ import 'package:smsw/color.dart';
 var authToken = '';
 var refreshToken = '';
 var name = "";
-var email = "";
+var id = "";
 
 class LoginPage extends StatefulWidget {
   @override
@@ -202,12 +202,11 @@ class _LoginPageState extends State<LoginPage> {
 
       var body = jsonDecode(response.body);
 
-      dynamic data = body["data"];
-
       ///!! 일단 result 값으로 지정해 놓음. 후에 서버와 논의하여 data값 설정하기.
       //print("token: " + token.toString());
+      dynamic data=body["response"];
 
-      if (body["success"] == "true") {
+      if (body["success"] == true) {
         String token = data["accessToken"];
         refreshToken = data["refreshToken"];
         print("로그인에 성공하셨습니다.");
@@ -225,12 +224,12 @@ class _LoginPageState extends State<LoginPage> {
       print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
 
       var body = jsonDecode(response.body);
+      dynamic data=body["error"];
 
-      dynamic data = body["data"];
-      if (body["success"] == "false" && body["errorName"]=="USER_NOT_FOUND"){
-      _showDialog("요청한 회원이 존재하지 않습니다.");
+      if (body["success"] == false && data["errorName"]=="USER_NOT_FOUND") {
+        _showDialog("요청한 회원이 존재하지 않습니다.");
       }
-      else if (body["success"] == "false" && body["errorName"]=="WRONG_PASSWORD"){
+      else if (body["success"] == false && data["errorName"]=="WRONG_PASSWORD"){
       _showDialog("비밀번호가 틀렸습니다.");
       }
       else{
@@ -243,12 +242,12 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void userInfo() async {
-    var url = Uri.http('${serverHttp}:8080', '/user/info');
+    var url = Uri.http('${serverHttp}:8080', '/member/info');
 
     var response = await http.get(url, headers: {
       'Accept': 'application/json',
       "content-type": "application/json",
-      "Authorization": "Bearer ${authToken}"
+      "X-AUTH-TOKEN": "Bearer ${authToken}"
     });
 
     print(url);
@@ -261,7 +260,7 @@ class _LoginPageState extends State<LoginPage> {
       var body = jsonDecode(utf8.decode(response.bodyBytes));
 
       var data = body["data"];
-      email = data["email"].toString();
+      id = data["memberId"].toString();
       name = data["name"].toString();
     } else {
       print('error : ${response.reasonPhrase}');
