@@ -63,19 +63,6 @@ class _LoginPageState extends State<LoginPage> {
         },
         child: Scaffold(
             body: new Container(
-              // decoration: BoxDecoration(
-              //   gradient: LinearGradient(
-              //     begin: Alignment.bottomCenter,
-              //     end: Alignment.topCenter,
-              //     colors: [
-              //       Color(0xffF2F2F2),
-              //       Color(0xffF2F7EE),
-              //       Color(0xffF8FFF3),
-              //     ],
-              //     stops: [0.3, 0.7, 0.9, ],
-              //   ),
-              // ),
-              // color: Color(0xfff0f8ff),
               child: Container(
                 padding: EdgeInsets.all(30),
                 child: new Form(
@@ -101,15 +88,16 @@ class _LoginPageState extends State<LoginPage> {
                         child: new Column(
                           children: <Widget>[
                             new TextFormField(
-                              decoration: new InputDecoration(labelText: 'ID'),
+                              decoration: new InputDecoration(labelText: '아이디'),
                               validator: (value) =>
                               value!.isEmpty ? '아이디를 입력해주세요' : null,
                               onSaved: (value) => _id = value!,
                             ),
+                            Padding(padding: EdgeInsets.all(5.0)),
                             new TextFormField(
                               obscureText: true,
                               decoration:
-                              new InputDecoration(labelText: 'Password'),
+                              new InputDecoration(labelText: '비밀번호'),
                               validator: (value) => value!.isEmpty
                                   ? '비밀번호를 입력해주세요'
                                   : null,
@@ -122,7 +110,6 @@ class _LoginPageState extends State<LoginPage> {
                       //로그인
                       Container(
                         margin: EdgeInsets.only(left: 0.0, top: 40.0, right: 0.0, bottom: 10.0),
-
                         child: new ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(

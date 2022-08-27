@@ -51,27 +51,24 @@ class _SignUpPageState extends State<SignUpPage> {
 
       var body = jsonDecode(response.body);
 
-      if(body["success"] == true){
+      if (body["success"] == true) {
         _showDialog("회원가입 성공", "회원가입에 성공했습니다.");
-      }
-      else{
+      } else {
         _showDialog("회원가입 실패", "회원가입에 실패했습니다");
       }
-    } else if(response.statusCode == 400){
+    } else if (response.statusCode == 400) {
       print('Response status: ${response.statusCode}');
       print('Response body: ${jsonDecode(utf8.decode(response.bodyBytes))}');
 
       var body = jsonDecode(response.body);
-      dynamic data=body["error"];
+      dynamic data = body["error"];
 
-      if(body["success"] == false && data["errorName"]=="DUPLICATED"){
+      if (body["success"] == false && data["errorName"] == "DUPLICATED") {
         _showDialog("회원가입 실패", "이미 회원가입한 아이디입니다.");
-      }
-      else{
+      } else {
         _showDialog("회원가입 실패", "아이디는 빈값일 수 없습니다.");
       }
-    }
-    else {
+    } else {
       print('error : ${response.reasonPhrase}');
     }
   }
@@ -84,128 +81,118 @@ class _SignUpPageState extends State<SignUpPage> {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
-          //resizeToAvoidBottomInset : false,
-            body: SingleChildScrollView(
-                child: new Container(
-                  // decoration: BoxDecoration(
-                  //   gradient: LinearGradient(
-                  //     begin: Alignment.bottomCenter,
-                  //     end: Alignment.topCenter,
-                  //     colors: [
-                  //       Color(0xffF3F4F6),
-                  //       Color(0xffEFF4FA),
-                  //       Color(0xffECF4FE),
-                  //     ],
-                  //     stops: [0.3, 0.7, 0.9, ],
-                  //   ),
-                  // ),
-                  child: Container(
-                      padding: EdgeInsets.all(30),
-                      child: new Form(
-                        key: _formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.only(bottom: 20.0),
-                              alignment: Alignment.center,
-                              child: Center(
-                                child: Text(
-                                  '회원가입',
-                                  style: new TextStyle(
-                                      fontSize: 28.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(greenColor)),
-                                ),
-                              ),
-                            ),
-
-                            Container(
-                              child: Column(
-                                children: [
-                                  TextFormField(
-                                    decoration: new InputDecoration(labelText: '아이디'),
-                                    validator: (value) =>
-                                    value!.isEmpty ? '아이디를 입력해주세요' : null,
-                                    onSaved: (value) => _id = value!,
-                                  ),
-                                  TextFormField(
-                                    decoration: new InputDecoration(labelText: '이름'),
-                                    validator: (value) =>
-                                    value!.isEmpty ? '이름을 입력해주세요' : null,
-                                    onSaved: (value) => _name = value!,
-                                  ),
-                                  TextFormField(
-                                    obscureText: true,
-                                    decoration: new InputDecoration(labelText: '비밀번호'),
-                                    validator: (value) =>
-                                    value!.isEmpty ? '비밀번호를 입력해주세요' :null,
-                                    onSaved: (value) => _pass = value!,
-                                  ),
-                                  // TextFormField(
-                                  //   obscureText: true,
-                                  //   decoration: new InputDecoration(labelText: '비밀번호 확인'),
-                                  //   validator: (value) =>
-                                  //   value!.isEmpty ? '비밀번호가 확인되지 않았습니다' :
-                                  //   value != _pass? "비밀번호가 일치하지 않습니다." :null,
-                                  // ),
-                                ],
-                              ),
-                            ),
-
-                            Container(
-                              margin: EdgeInsets.only(top: 30.0, bottom: 10.0),
-                              child: new RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                color: Color(greenColor),
-                                child: new Text(
-                                  '회원가입',
-                                  style: new TextStyle(
-                                    fontSize: 18.0,
-                                    color: Color(0xffFFFFFF),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  validateAndSignUp();
-                                  print("pass"+_pass);
-                                },
-                              ),
-                              height: 45,
-                            ),
-                            Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('이미 계정이 있으신가요?'),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => LoginPage()),
-                                      );
-                                    },
-                                    child: Text(
-                                      '로그인',
-                                      style: TextStyle(
-                                        color: Color(greenColor),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
+            body: SafeArea(
+          child: Container(
+              padding: EdgeInsets.all(30),
+              child: new Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(bottom: 20.0),
+                      alignment: Alignment.center,
+                      child: Center(
+                        child: Text(
+                          '회원가입',
+                          style: new TextStyle(
+                              fontSize: 28.0,
+                              fontWeight: FontWeight.bold,
+                              color: Color(greenColor)),
                         ),
-                      )),
-                ))));
+                      ),
+                    ),
+                    Container(
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            decoration: new InputDecoration(labelText: '아이디'),
+                            validator: (value) =>
+                                value!.isEmpty ? '아이디를 입력해주세요' : null,
+                            onSaved: (value) => _id = value!,
+                          ),
+                          Padding(padding: EdgeInsets.all(5.0)),
+                          TextFormField(
+                            decoration: new InputDecoration(labelText: '이름'),
+                            validator: (value) =>
+                                value!.isEmpty ? '이름을 입력해주세요' : null,
+                            onSaved: (value) => _name = value!,
+                          ),
+                          Padding(padding: EdgeInsets.all(5.0)),
+                          TextFormField(
+                            obscureText: true,
+                            decoration: new InputDecoration(labelText: '비밀번호'),
+                            validator: (value) =>
+                                value!.isEmpty ? '비밀번호를 입력해주세요' : null,
+                            onSaved: (value) => _pass = value!,
+                          ),
+                          // TextFormField(
+                          //   obscureText: true,
+                          //   decoration: new InputDecoration(labelText: '비밀번호 확인'),
+                          //   validator: (value) =>
+                          //   value!.isEmpty ? '비밀번호가 확인되지 않았습니다' :
+                          //   value != _pass? "비밀번호가 일치하지 않습니다." :null,
+                          // ),
+
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 40.0, bottom: 10.0),
+                      child: new ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          primary: Color(greenColor),
+                        ),
+                        child: new Text(
+                          '회원가입',
+                          style: new TextStyle(
+                            fontSize: 18.0,
+                            color: Color(0xffFFFFFF),
+                          ),
+                        ),
+                        onPressed: () {
+                          validateAndSignUp();
+                          print("pass" + _pass);
+                        },
+                      ),
+                      height: 45,
+                    ),
+                    Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('이미 계정이 있으신가요?'),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginPage()),
+                              );
+                            },
+                            child: Text(
+                              '로그인',
+                              style: TextStyle(
+                                  color: Color(greenColor),
+                                  fontWeight: FontWeight.w600,
+                                  decoration: TextDecoration.underline),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )),
+        )));
   }
 
-  void _showDialog(String title, text){
+  void _showDialog(String title, text) {
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -218,9 +205,9 @@ class _SignUpPageState extends State<SignUpPage> {
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              // Navigator.push(context,
-              //   MaterialPageRoute(builder: (context) => LoginPage()),
-              // );
+              Navigator.push(context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
             },
             child: const Text('확인'),
           ),

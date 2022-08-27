@@ -41,7 +41,8 @@ class _SplashScreenState extends State<SplashScreen> {
         body: new Container(
             child: Center(
               child: Container(
-                margin: EdgeInsets.all(100.0),
+                width: 100,
+                height: 100,
                 // alignment:Alignment.center,
                 child: Image.asset('images/happy.png'),
               ),
