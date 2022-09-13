@@ -11,7 +11,6 @@ import {
   Platform,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {NativeScreenNavigationContainer} from 'react-native-screens';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import Feather from 'react-native-vector-icons/dist/Feather';
 

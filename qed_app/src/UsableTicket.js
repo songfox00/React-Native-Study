@@ -1,7 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {FlatList, StyleSheet, TouchableOpacity, View, Text} from 'react-native';
-import {withNavigation} from 'react-navigation';
 
 const Data = [
   {id: 1, place: 'QED 반포', kind: '오픈베이', due: 10},
