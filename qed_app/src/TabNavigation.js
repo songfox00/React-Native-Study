@@ -1,9 +1,9 @@
 import React from 'react';
-import Home from './Home';
+import Home from './Home/Home';
 import {useNavigation} from '@react-navigation/native';
 import Reserve from './Reserve';
 import Data from './Data';
-import Mypage from './Mypage';
+import Mypage from './MyPage/Mypage';
 import Feather from 'react-native-vector-icons/dist/Feather';
 import Ionicons from 'react-native-vector-icons/dist/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/dist/MaterialIcons';
@@ -14,13 +14,24 @@ const Tab = createBottomTabNavigator();
 const TabNavigation = () => {
   return (
     <Tab.Navigator
-      screenOptions={{headerShown: false, tabBarActiveTintColor: '#0F172A'}}
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: '#191F28',
+        tabBarInActiveTintColor: '#737373',
+      }}
       initialRouteName="홈">
       <Tab.Screen
         name="홈"
         component={Home}
         options={{
-          tabBarIcon: () => <Feather name="home" size={30} />,
+          tabBarIcon: () => (
+            <Feather
+              name="home"
+              size={30}
+              tabBarActiveTintColor="#191F28"
+              tabBarInActiveTintColor="#737373"
+            />
+          ),
         }}
       />
       <Tab.Screen

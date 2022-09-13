@@ -7,15 +7,9 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  StatusBar,
-  Platform,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
 import Feather from 'react-native-vector-icons/dist/Feather';
-
-const statusHeight =
-  Platform.OS == 'ios' ? getStatusBarHeight(true) : StatusBar.currentHeight;
 
 const StoreDetail = () => {
   console.log(navigation);
@@ -86,7 +80,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#171717',
     alignItems: 'flex-end',
     justifyContent: 'center',
-    height: 108 - statusHeight,
+    height: 76,
     width: '100%',
     paddingBottom: 20,
   },

@@ -5,7 +5,7 @@ import UsableTicket from './UsableTicket';
 import User from './User';
 import Ionicons from 'react-native-vector-icons/dist/Ionicons';
 import {createStackNavigator} from '@react-navigation/stack';
-import StoreDetail from './StoreDetail';
+import StoreDetail from '../StoreDetail';
 
 const Stack = createStackNavigator();
 

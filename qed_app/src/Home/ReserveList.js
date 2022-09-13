@@ -4,15 +4,12 @@ import {
   SectionList,
   TouchableOpacity,
   View,
-  Dimensions,
   StyleSheet,
   Text,
-  StatusBar,
 } from 'react-native';
 import Feather from 'react-native-vector-icons/dist/Feather';
 import User from './User';
 import UsableTicket from './UsableTicket';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 const Data = [
   {
@@ -123,15 +120,12 @@ const Item = ({kind, reserve, date, time, address, onPress}) => (
   </View>
 );
 
-const statusHeight =
-  Platform.OS == 'ios' ? getStatusBarHeight(true) : StatusBar.currentHeight;
-
 const Header = ({title}) => (
   <View>
     <View
       style={{
         backgroundColor: '#171717',
-        height: 219 - statusHeight,
+        height: 187,
         width: '100%',
         // justifyContent: 'center',
       }}>
