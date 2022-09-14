@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {View, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
 import Feather from 'react-native-vector-icons/dist/Feather';
+import EditMyInfo from './EditMyInfo';
 
 export default MyPageUser = () => {
+  const bottomSheet = useRef();
   return (
     <View style={styles.header}>
       <View style={styles.menuIcon}>
@@ -11,7 +13,14 @@ export default MyPageUser = () => {
           size={24}
           style={[styles.whiteColor, {marginRight: 19}]}
         />
-        <Feather name="align-justify" size={24} style={styles.whiteColor} />
+        <Feather
+          onPress={() => {
+            bottomSheet.current.show();
+          }}
+          name="menu"
+          size={24}
+          style={styles.whiteColor}
+        />
       </View>
       <View
         style={{
@@ -50,6 +59,7 @@ export default MyPageUser = () => {
       <TouchableOpacity onPress={() => {}} style={styles.lesson}>
         <Text style={styles.lessonText}>레슨 노트</Text>
       </TouchableOpacity>
+      <EditMyInfo bottomSheet={bottomSheet} />
     </View>
   );
 };
