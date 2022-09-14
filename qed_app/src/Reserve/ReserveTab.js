@@ -1,7 +1,8 @@
 import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import SelectTicket from './SelectTicket';
+import BuyTicket from './BuyTicket';
 import Recent from './Recent';
+import SelectTicket from './SelectTicket';
 
 const Tab = createMaterialTopTabNavigator();
 

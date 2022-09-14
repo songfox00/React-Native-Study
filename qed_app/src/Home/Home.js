@@ -12,8 +12,15 @@ const Stack = createStackNavigator();
 const Home = () => {
   // console.log('navigation:', navigation);
   return (
-    <View style={{backgroundColor: '#171717', flex: 1, height: '100%'}}>
-      <SafeAreaView style={{flexDirection: 'column'}}>
+    <View style={styles.background}>
+      <View style={{backgroundColor: '#171717', height: '50%'}}></View>
+      <SafeAreaView
+        style={{
+          flexDirection: 'column',
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+        }}>
         <ReserveList />
       </SafeAreaView>
     </View>
@@ -21,6 +28,11 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
+  background: {
+    backgroundColor: '#F8FAFC',
+    flex: 1,
+    height: '100%',
+  },
   user: {
     color: '#fff',
   },

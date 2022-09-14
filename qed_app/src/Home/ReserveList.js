@@ -60,12 +60,7 @@ const Data = [
 ];
 
 const Item = ({kind, reserve, date, time, address, onPress}) => (
-  <View
-    style={{
-      // marginVertical: 8,
-      // marginHorizontal: 16,
-      backgroundColor: '#F8FAFC',
-    }}>
+  <View style={{backgroundColor: '#F8FAFC'}}>
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <View style={{flexDirection: 'row'}}>
         <View
@@ -78,11 +73,12 @@ const Item = ({kind, reserve, date, time, address, onPress}) => (
             },
           ]}>
           <Text
-            style={{
-              fontSize: 12,
-              fontWeight: '600',
-              color: kind == '오픈베이' ? 'red' : 'blue',
-            }}>
+            style={[
+              styles.text,
+              {
+                color: kind == '오픈베이' ? 'red' : 'blue',
+              },
+            ]}>
             {kind}
           </Text>
         </View>
@@ -91,9 +87,7 @@ const Item = ({kind, reserve, date, time, address, onPress}) => (
             styles.infoBox,
             {backgroundColor: '#F9FAFB', borderColor: '#E5E8EB'},
           ]}>
-          <Text style={{fontSize: 12, fontWeight: '600', color: '#333D4B'}}>
-            {reserve}
-          </Text>
+          <Text style={[styles.text, {color: '#333D4B'}]}>{reserve}</Text>
         </View>
       </View>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -127,24 +121,13 @@ const Header = ({title}) => (
         backgroundColor: '#171717',
         height: 187,
         width: '100%',
-        // justifyContent: 'center',
       }}>
       <User />
     </View>
     <View style={{height: 40, width: '100%', backgroundColor: '#fff'}}></View>
 
     <View style={{backgroundColor: '#F8FAFC', width: '100%', height: 103}}>
-      <Text
-        style={{
-          fontSize: 15,
-          fontWeight: '700',
-          color: '#475569',
-          paddingLeft: 16,
-          marginTop: 75,
-          paddingBottom: 8,
-        }}>
-        {title}
-      </Text>
+      <Text style={styles.reserveHeader}>{title}</Text>
     </View>
     <View
       style={{
@@ -158,15 +141,12 @@ const Header = ({title}) => (
 );
 
 export default ReserveList = () => {
-  // console.log(navigation);
   return (
-    // <View style={{width: '100%', height: '100%'}}>
     <SectionList
-      style={{backgroundColor: '#171717'}}
+      style={{backgroundColor: '#00000000'}}
       sections={Data}
       renderSectionHeader={({section}) => <Header title={section.title} />}
       renderItem={({item}) => (
-        // <View style={{top: 340}}>
         <Item
           kind={item.kind}
           reserve={item.reserve}
@@ -177,12 +157,10 @@ export default ReserveList = () => {
             // navigation.navigate('roture',);
           }}
         />
-        // </View>
       )}
       keyExtractor={item => item.id}
       stickySectionHeadersEnabled={false}
     />
-    // </View>
   );
 };
 
@@ -217,5 +195,17 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '400',
     color: '#8D95A1',
+  },
+  text: {
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  reserveHeader: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#475569',
+    paddingLeft: 16,
+    marginTop: 75,
+    paddingBottom: 8,
   },
 });

@@ -1,21 +1,45 @@
 import React from 'react';
-import {StyleSheet, View, ScrollView} from 'react-native';
+import {StyleSheet, View, ScrollView, StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import StoreDetail from './src/StoreDetail';
 import TabNavigation from './src/TabNavigation';
 import {useNavigation} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+
+const StatusBarHeight = Platform.OS === 'ios' ? getStatusBarHeight(true) : 0;
 
 const Stack = createStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{headerShown: false}}
-        initialRouteName="Home">
-        <Stack.Screen name="Home" component={TabNavigation} />
-        <Stack.Screen name="StoreDetail" component={StoreDetail} />
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          name="Home"
+          component={TabNavigation}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="StoreDetail"
+          component={StoreDetail}
+          options={{
+            headerTitle: '매장 상세',
+            headerStyle: {
+              backgroundColor: '#171717',
+              height: 76 + StatusBarHeight,
+            },
+            headerBackTitleVisible: false,
+            headerTitleStyle: {
+              color: '#fff',
+              fontWeight: '600',
+              fontSize: 17,
+              lineHeight: 27,
+            },
+            headerTintColor: '#fff',
+            headerTitleAlign: 'center',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -12,12 +12,7 @@ export default ReserveDate = () => {
           <Text style={styles.mapText}>지도</Text>
         </TouchableOpacity>
       </View>
-      <View
-        style={{
-          alignItems: 'center',
-          justifyContent: 'flex-end',
-          marginTop: 25,
-        }}>
+      <View style={styles.dateList}>
         <DateList />
       </View>
     </View>
@@ -50,5 +45,10 @@ const styles = StyleSheet.create({
     fontSize: 13,
 
     color: '#262626',
+  },
+  dateList: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    marginTop: 25,
   },
 });

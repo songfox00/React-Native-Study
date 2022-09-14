@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, FlatList} from 'react-native';
+import {View, Text, FlatList, StyleSheet} from 'react-native';
 
 const lessonData = [
   {style: '훅교정'},
@@ -8,26 +8,8 @@ const lessonData = [
 ];
 
 const Item = ({item}) => (
-  <View
-    style={{
-      paddingVertical: 4,
-      paddingHorizontal: 10,
-      backgroundColor: '#F1F5F9',
-      marginRight: 8,
-      height: 26,
-      alignSelf: 'flex-start',
-      borderRadius: 4,
-      marginTop: 8,
-    }}>
-    <Text
-      style={{
-        fontWeight: '400',
-        fontSize: 12,
-        lineHeight: 18,
-        color: '#404040',
-      }}>
-      {item.style}
-    </Text>
+  <View style={styles.container}>
+    <Text style={styles.lessonText}>{item.style}</Text>
   </View>
 );
 
@@ -47,3 +29,22 @@ export default LessonStyle = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    backgroundColor: '#F1F5F9',
+    marginRight: 8,
+    height: 26,
+    alignSelf: 'flex-start',
+    borderRadius: 4,
+    marginTop: 8,
+  },
+  lessonText: {
+    fontWeight: '400',
+    fontSize: 12,
+    lineHeight: 18,
+    color: '#404040',
+  },
+});

@@ -15,62 +15,52 @@ const StoreDetail = () => {
   console.log(navigation);
   const navigation = useNavigation();
   return (
-    <View style={{backgroundColor: '#171717', flex: 1, height: '100%'}}>
-      <SafeAreaView style={{flexDirection: 'column'}}>
-        <ScrollView style={{height: '100%'}}>
-          <View style={styles.header}>
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={{position: 'absolute', left: 21, bottom: 20}}>
-              <Feather style={{color: '#ffffff'}} size={24} name="arrow-left" />
-            </TouchableOpacity>
-            <Text style={styles.title}>매장 상세</Text>
-          </View>
-          <View style={{height: 200}}>
-            <Image
-              style={{height: '100%'}}
-              source={{
-                uri: 'https://img.hankyung.com/photo/202109/99.20936779.1-1200x.jpg',
-              }}
-            />
-          </View>
-          <View
-            style={{
-              backgroundColor: '#ffffff',
-              height: '100%',
-              paddingTop: 24,
-            }}>
-            <Text style={styles.store}>QED 직영 1호 광화문점</Text>
-            <Text style={styles.address}>서울특별시 중구 광화문로 14</Text>
-            <TouchableOpacity style={styles.reserveButton}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: '600',
-                  lineHeight: 23,
-                  color: '#171717',
-                }}>
-                예약하기
-              </Text>
-            </TouchableOpacity>
-            <View style={styles.greyline}>
-              <View style={styles.underline}>
-                <Text style={styles.info}>매장 소개</Text>
-              </View>
-            </View>
-            <Text style={styles.body}>
-              서울 종로구 사직로8길 20 경희궁 파크팰리스 지하1층서울 종로구
-              사직로8길 20 경희궁 파크팰리스 지하1층서울 종로구 사직로8길 20
-              경희궁 파크팰리스 지하1층서울 종로구 사직로8길 20 경희궁
-              파크팰리스 지하1층서울 종로구 사직로8길 20 경희궁 파크팰리스
-              지하1층서울 종로구 사직로8길 20 경희궁 파크팰리스 지하1층서울
-              종로구 사직로8길 20 경희궁 파크팰리스 지하1층서울 종로구 사직로8길
-              20 경희궁 파크팰리스 지하1층
+    <SafeAreaView style={{flexDirection: 'column'}}>
+      <ScrollView style={{height: '100%'}}>
+        <View style={{height: 200}}>
+          <Image
+            style={{height: '100%'}}
+            source={{
+              uri: 'https://img.hankyung.com/photo/202109/99.20936779.1-1200x.jpg',
+            }}
+          />
+        </View>
+        <View
+          style={{
+            backgroundColor: '#ffffff',
+            height: '100%',
+            paddingTop: 24,
+          }}>
+          <Text style={styles.store}>QED 직영 1호 광화문점</Text>
+          <Text style={styles.address}>서울특별시 중구 광화문로 14</Text>
+          <TouchableOpacity style={styles.reserveButton}>
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: '600',
+                lineHeight: 23,
+                color: '#171717',
+              }}>
+              예약하기
             </Text>
+          </TouchableOpacity>
+          <View style={styles.greyline}>
+            <View style={styles.underline}>
+              <Text style={styles.info}>매장 소개</Text>
+            </View>
           </View>
-        </ScrollView>
-      </SafeAreaView>
-    </View>
+          <Text style={styles.body}>
+            서울 종로구 사직로8길 20 경희궁 파크팰리스 지하1층서울 종로구
+            사직로8길 20 경희궁 파크팰리스 지하1층서울 종로구 사직로8길 20
+            경희궁 파크팰리스 지하1층서울 종로구 사직로8길 20 경희궁 파크팰리스
+            지하1층서울 종로구 사직로8길 20 경희궁 파크팰리스 지하1층서울 종로구
+            사직로8길 20 경희궁 파크팰리스 지하1층서울 종로구 사직로8길 20
+            경희궁 파크팰리스 지하1층서울 종로구 사직로8길 20 경희궁 파크팰리스
+            지하1층
+          </Text>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

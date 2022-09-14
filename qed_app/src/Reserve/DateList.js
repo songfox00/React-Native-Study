@@ -24,12 +24,7 @@ const Data = [
 ];
 
 const Item = ({item, onPress, backgroundColor, color}) => (
-  <View
-    style={{
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginHorizontal: 10,
-    }}>
+  <View style={styles.dateView}>
     <TouchableOpacity
       onPress={onPress}
       style={[styles.dateButton, backgroundColor]}>
@@ -45,7 +40,6 @@ export default DateList = () => {
   const renderItem = ({item}) => {
     const backgroundColor = selectedId === item.id ? '#ffffff' : '#171717';
     const color = selectedId === item.id ? '#171717' : '#ffffff';
-    // const dayColor = selectedId === item.date ? '#ffffff' : '#A3A3A3';
     return (
       <Item
         item={item}
@@ -86,5 +80,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 20,
     color: '#A3A3A3',
+  },
+  dateView: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 10,
   },
 });
