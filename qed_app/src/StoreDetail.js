@@ -1,21 +1,13 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {
-  SafeAreaView,
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import Feather from 'react-native-vector-icons/dist/Feather';
 
 const StoreDetail = () => {
   console.log(navigation);
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={{flexDirection: 'column'}}>
+    <View style={{flexDirection: 'column'}}>
       <ScrollView style={{height: '100%'}}>
         <View style={{height: 200}}>
           <Image
@@ -60,7 +52,7 @@ const StoreDetail = () => {
           </Text>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
