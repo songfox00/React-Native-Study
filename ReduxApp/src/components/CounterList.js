@@ -5,12 +5,13 @@ import PropTypes from 'prop-types';
 
 const CounterList = ({
   counter,
-  handleAddCounter,
-  handleRemoveCounter,
+  // handleAddCounter,
+  // handleRemoveCounter,
   handleIncrement,
   handleDecrement,
 }) => {
-  const counterModule = counter.map((item, index) => (
+  console.log(counter);
+  const counterModule = counter.counter.map((item, index) => (
     <Counter
       key={index}
       index={index}
