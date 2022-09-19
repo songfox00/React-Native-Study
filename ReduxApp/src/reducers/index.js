@@ -25,7 +25,7 @@ const counter = (state = initialState, action) => {
         counter: [
           ...counter.slice(0, action.index),
           {
-            counterNum: counter[action.index].counterNum + 1,
+            counterNum: counter[action.index].counterNum - 1,
           },
           ...counter.slice(action.index + 1, counter.length),
         ],
@@ -48,3 +48,5 @@ const counter = (state = initialState, action) => {
       return state;
   }
 };
+
+export default counter;
