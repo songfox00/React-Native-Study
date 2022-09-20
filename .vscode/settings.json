@@ -1,1 +1,10 @@
-{}
+{
+  "terminal.integrated.defaultProfile.osx": "rosetta",
+  "terminal.integrated.profiles.osx": {
+    "rosetta": {
+      "path": "arch",
+      "args": ["-x86_64", "zsh", "-l"],
+      "overrideName": true
+    }
+  }
+}
