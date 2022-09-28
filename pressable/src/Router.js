@@ -1,41 +1,46 @@
-import React, {useState} from 'react';
-import {
-  SafeAreaView,
-  View,
-  Text,
-  useColorScheme,
-  Switch,
-  TouchableOpacity,
-} from 'react-native';
-import {
-  useTheme,
-  DefaultTheme,
-  Provider as PaperProvider,
-} from 'react-native-paper';
-import {useNavigation} from '@react-navigation/native';
+import React, {Component} from 'react';
+import {SafeAreaView, Text, TouchableOpacity} from 'react-native';
+import AppEventEmitter from './AppEventEmitter';
+class Router extends Component {
+  check = () => {
+    console.log("I'm Router");
+  };
 
-const Router = () => {
-  const navigation = useNavigation();
-  const {colors} = useTheme();
-  // const [isEnabled, setIsEnabled] = useState(false);
-  // const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-  return (
-    <SafeAreaView
-      style={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 1,
-        backgroundColor: colors.primary,
-      }}>
-      {/* <Switch onValueChange={toggleSwitch} value={isEnabled} /> */}
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('Press');
+  componentDidMount() {
+    AppEventEmitter.addListener('check', this.check);
+  }
+
+  componentWillUnmount() {
+    AppEventEmitter.removeListener('check', this.check);
+  }
+
+  render() {
+    return (
+      <SafeAreaView
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          flex: 1,
+          backgroundColor: 'white',
+          flexDirection: 'column',
         }}>
-        <Text style={{color: colors.accent}}>Pressable</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
-  );
-};
+        <TouchableOpacity
+          style={{marginBottom: 20}}
+          onPress={() => {
+            this.props.navigation.navigate('Press');
+          }}>
+          <Text style={{color: 'black'}}>Pressable</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{marginBottom: 20}}
+          onPress={() => {
+            this.props.navigation.navigate('Map');
+          }}>
+          <Text style={{color: 'black'}}>Map 함수</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    );
+  }
+}
 
 export default Router;

@@ -10,6 +10,8 @@ import {NavigationContainer} from '@react-navigation/native';
 
 import Press from './src/Press';
 import Router from './src/Router';
+import MapFunction from './src/MapFunction';
+import AppContainer from './src/index';
 
 const darkTheme = {
   ...DefaultTheme,
@@ -38,10 +40,12 @@ export default App = () => {
   return (
     <PaperProvider theme={scheme === 'dark' ? darkTheme : lightTheme}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
+        <AppContainer />
+        {/* <Stack.Navigator>
           <Stack.Screen name="Router" component={Router} />
           <Stack.Screen name="Press" component={Press} />
-        </Stack.Navigator>
+          <Stack.Screen name="Map" component={MapFunction} />
+        </Stack.Navigator> */}
       </NavigationContainer>
     </PaperProvider>
   );

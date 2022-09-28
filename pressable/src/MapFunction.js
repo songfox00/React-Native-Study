@@ -17,22 +17,30 @@ class MapFunction extends Component {
     };
   }
 
+  // componentDidMount() {
+
+  // }
   onCLickFunc = () => {
     console.log('일반 함수 클릭됨');
   };
 
   onClickId = current => {
     console.log(current, '함수 클릭됨');
+    this.props.navigation.navigate('Func');
   };
 
   render() {
+    // this.state.navigation = useNavigation();
     return (
       <View style={[styles.container, {backgroundColor: 'white'}]}>
         {this.state.testList}
         <TouchableOpacity style={{marginBottom: 20}} onPress={this.onCLickFunc}>
           <Text>일반 함수</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.onClickId('파라미터')}>
+        <TouchableOpacity
+          onPress={() => {
+            this.onClickId('파라미터');
+          }}>
           <Text>파라미터 함수</Text>
         </TouchableOpacity>
       </View>
