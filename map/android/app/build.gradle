@@ -135,7 +135,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.pressable"
+        applicationId "com.map"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -277,12 +277,6 @@ dependencies {
     } else {
         implementation jscFlavor
     }
-//    implementation(project(':react-native-maps')){
-//        exclude group:'com.google.android.gms', module: 'play-services-base'
-//        exclude group:'com.google.android.gms', module: 'play-services-maps'
-//    }
-//    implementation 'com.google.android.gms:play-services-base:18.1.0'
-//    implementation 'com.google.android.gms:play-services-maps:18.1.0'
 }
 
 if (isNewArchitectureEnabled()) {
