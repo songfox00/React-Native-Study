@@ -63,4 +63,5 @@ buck-out/
 /ios/Pods/
 /vendor/bundle/
 
-ios/googleMap/AppDelegate.mm
+# environment variable
+/env

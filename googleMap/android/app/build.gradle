@@ -88,6 +88,11 @@ Properties properties=new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 def AndroidApiKey=properties.getProperty('android_api_key')
 
+project.ext.envConfigFiles=[
+    anothercustombuild: ".env"
+]
+
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 /**
  * Set this to true to create two separate APKs instead of one:
  *   - An APK that only works on ARM devices
@@ -137,7 +142,8 @@ android {
     ndkVersion rootProject.ext.ndkVersion
 
     compileSdkVersion rootProject.ext.compileSdkVersion
-
+    flavorDimensions "version"
+    
     defaultConfig {
         applicationId "com.googlemap"
         minSdkVersion rootProject.ext.minSdkVersion
