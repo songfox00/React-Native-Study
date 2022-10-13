@@ -16,7 +16,7 @@
 #import <ReactCommon/RCTTurboModuleManager.h>
 
 #import <react/config/ReactNativeConfig.h>
-#import {IOS_GOOGLE_KEY} from 'react-native-config';
+#import Config from 'react-native-config';
 
 static NSString *const kRNConcurrentRoot = @"concurrentRoot";
 

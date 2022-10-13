@@ -77,6 +77,11 @@ import org.apache.tools.ant.taskdefs.condition.Os
  *   extraPackagerArgs: []
  * ]
  */
+project.ext.vectoricons=[
+    iconiconFontNames:['Ionicons.ttf', 'MaterialCommunityIcons.ttf', 'MaterialIcons.ttf', 'FontAwesome.ttf', 'Entypo.ttf', 'AntDesgin.ttf', 'Feather.ttf', 'Fontisto.tff']
+]
+
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 project.ext.react = [
     enableHermes: true,  // clean and rebuild if changing
@@ -87,9 +92,16 @@ apply from: "../../node_modules/react-native/react.gradle"
 Properties properties=new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 def AndroidApiKey=properties.getProperty('android_api_key')
+def GeocodingApi=properties.getProperty('geocoding_api')
 
 project.ext.envConfigFiles=[
-    anothercustombuild: ".env"
+    // developdebug: "env/.env.develop",
+    // developrelease: "env/.env.develop", 
+    // stagedebug: "env/.env.stage",
+    // stagerelease: "env/.env.stage",
+    // productdebug: "env/.env.product",    
+    // productrelease: "env/.env.product",
+    anothercustombuild: ".env",
 ]
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
@@ -143,7 +155,14 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
     flavorDimensions "version"
-    
+    productFlavors {
+        // develop {
+        // }
+        // stage {
+        // }
+        // product {
+        // }
+    }
     defaultConfig {
         applicationId "com.googlemap"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -152,7 +171,7 @@ android {
         versionName "1.0"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
 
-        manifestPlaceholders=[AndroidApiKey:AndroidApiKey]
+        manifestPlaceholders=[AndroidApiKey:AndroidApiKey, GeocodingApi: GeocodingApi]
 
         if (isNewArchitectureEnabled()) {
             // We configure the CMake build only if you decide to opt-in for the New Architecture.
@@ -265,6 +284,7 @@ dependencies {
 
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation project(':react-native-vector-icons')
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
