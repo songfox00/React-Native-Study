@@ -89,13 +89,26 @@ class Map extends PureComponent {
             longitude: this.state.longitude,
             latitudeDelta: 0.0122,
             longitudeDelta: 0.01,
-          }}>
+          }}
+          onRegionChange={region => {
+            this.setState({
+              latitude: region.latitude,
+              longitude: region.longitude,
+            });
+          }}
+          onRegionChangeComplete={region => {
+            this.setState({
+              latitude: region.latitude,
+              longitude: region.longitude,
+            });
+          }}
+          >
           <Marker
             coordinate={{
               latitude: this.state.latitude,
               longitude: this.state.longitude,
             }}
-            title="큐이디"
+            title="현재 위치"
             description={this.state.address}
             onPress={() => {}}
           />
