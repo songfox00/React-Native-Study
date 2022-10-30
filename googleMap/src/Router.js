@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
@@ -38,12 +38,12 @@ class Router extends Component {
 
   readWeather() {
     requestPermission().then(result => {
-      console.log({result});
+      console.log({ result });
       if (result === 'granted') {
         // this.state.watchId =
         Geolocation.getCurrentPosition(
           pos => {
-            const {latitude, longitude} = pos.coords;
+            const { latitude, longitude } = pos.coords;
             console.log('changed: ', latitude, '', longitude);
             this.setState({
               latitude: latitude,
@@ -52,11 +52,11 @@ class Router extends Component {
             });
             fetch(
               'https://maps.googleapis.com/maps/api/geocode/json?latlng=' +
-                this.state.latitude +
-                ',' +
-                this.state.longitude +
-                '&language=ko&key=' +
-                Config.GEOCODING_API,
+              this.state.latitude +
+              ',' +
+              this.state.longitude +
+              '&language=ko&key=' +
+              Config.GEOCODING_API,
             )
               .then(response => response.json())
               .then(resJson => {
@@ -73,11 +73,11 @@ class Router extends Component {
 
             fetch(
               'https://api.openweathermap.org/data/2.5/weather?lat=' +
-                this.state.latitude +
-                '&lon=' +
-                this.state.longitude +
-                '&appid=' +
-                Config.WEATHER_KEY,
+              this.state.latitude +
+              '&lon=' +
+              this.state.longitude +
+              '&appid=' +
+              Config.WEATHER_KEY,
             )
               .then(response => response.json())
               .then(resJson => {
@@ -123,9 +123,9 @@ class Router extends Component {
     return (
       <LinearGradient
         colors={['#646FD4', '#646FD4', '#9BA3EB']}
-        style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <TouchableOpacity
-          style={{marginBottom: 40}}
+          style={{ marginBottom: 40 }}
           onPress={
             this.readWeather
 
