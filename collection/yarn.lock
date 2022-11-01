@@ -5688,6 +5688,11 @@
     "jscodeshift" "^0.13.1"
     "nullthrows" "^1.1.1"
 
+"react-native-config@^1.4.11":
+  "integrity" "sha512-PdBFnfR3pljUNrJu4B2wiJ9TbAiz1J1WcG5KP8AFBqZi8ve5MV/CTCDnANaGrqhOxkBDJV73D/SrMENHe7TKBg=="
+  "resolved" "https://registry.npmjs.org/react-native-config/-/react-native-config-1.4.11.tgz"
+  "version" "1.4.11"
+
 "react-native-geolocation-service@^5.3.1":
   "integrity" "sha512-LTXPtPNmrdhx+yeWG47sAaCgQc3nG1z+HLLHlhK/5YfOgfLcAb9HAkhREPjQKPZOUx8pKZMIpdGFUGfJYtimXQ=="
   "resolved" "https://registry.npmjs.org/react-native-geolocation-service/-/react-native-geolocation-service-5.3.1.tgz"

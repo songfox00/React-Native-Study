@@ -78,6 +78,12 @@ import org.apache.tools.ant.taskdefs.condition.Os
  * ]
  */
 
+project.ext.envConfigFiles=[
+    anothercustombuild: ".env"
+]
+
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
 project.ext.react = [
     enableHermes: true,  // clean and rebuild if changing
 ]
@@ -130,6 +136,7 @@ def reactNativeArchitectures() {
 }
 
 android {
+    flavorDimensions "version"
     ndkVersion rootProject.ext.ndkVersion
 
     compileSdkVersion rootProject.ext.compileSdkVersion
