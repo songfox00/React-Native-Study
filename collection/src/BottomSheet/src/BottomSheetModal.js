@@ -12,11 +12,11 @@ import {
 
 const screenHeight = Dimensions.get("window").height;
 
-export const BottomSheet = () => {
-    const half = screenHeight * 0.55;
-    const top = Platform.OS == 'ios' ? 30 : 0;
-    const bottom = screenHeight - 40;
+const half = screenHeight * 0.55;
+const top = Platform.OS == 'ios' ? 36 : 0;
+const bottom = screenHeight - 60;
 
+export const BottomSheet = () => {
     const panY = useRef(new Animated.Value(bottom)).current;
     const defaultY = useRef(bottom);
     const translateY = panY.interpolate({
@@ -55,7 +55,9 @@ export const BottomSheet = () => {
                     });
                 }
                 else {
-                    closeModal();
+                    closeBottomSheet.start(() => {
+                        defaultY.current = bottom;
+                    })
                 }
             }
             else if (gestureState.dy < 0) { //위로 드래그
@@ -77,16 +79,9 @@ export const BottomSheet = () => {
         closeBottomSheet.start();
     }, []);
 
-    const closeModal = () => {
-        closeBottomSheet.start(() => {
-            defaultY.current = bottom;
-        })
-    }
-
     return (
         <Modal
             visible={true}
-            animationType={"fade"}
         >
             {/* <View style={styles.overlay}> */}
             <Animated.View
@@ -112,7 +107,6 @@ export const BottomSheet = () => {
 const styles = StyleSheet.create({
     overlay: {
         flex: 1,
-        // justifyContent: "flex-end",
         backgroundColor: "rgba(0, 0, 0, 0.4)"
     },
     viewTop: {
@@ -134,16 +128,13 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 20,
         shadowOpacity: 2,
         shadowColor: '#e4e4e4',
-        // shadowOffset: {
-        //     width: 0,
-        //     height: 5,
-        // },
-        // elevation: 5,
+        borderTopWidth: 2,
+        borderColor: '#e4e4e4',
         justifyContent: 'center',
         alignItems: 'center'
     },
     bottomSheetContainer: {
-        height: screenHeight,
+        height: bottom,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#fff",
