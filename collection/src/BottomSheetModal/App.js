@@ -4,12 +4,12 @@ import {
     StyleSheet,
     Button
 } from 'react-native';
-import BottomSheet from './src/BottomSheet';
+import BottomSheetModal from './src/BottomSheetModal';
 
 export const App = () => {
     return (
         <View style={styles.rootContainer}>
-            <BottomSheet />
+            <BottomSheetModal />
         </View>
     )
 }

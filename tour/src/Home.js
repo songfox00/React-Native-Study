@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Geolocation from 'react-native-geolocation-service';
 import { Platform, PermissionsAndroid } from 'react-native';
-import BottomSheet from './BottomSheetModal';
+import BottomSheet from './BottomSheet';
 
 requestPermission = async () => {
     try {

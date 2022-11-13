@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Image, TouchableOpacity, StyleSheet, Text } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { View, Image, TouchableOpacity, StyleSheet, Text, FlatList, ActivityIndicator } from 'react-native';
 
 const Item = ({ item }) => (
     <TouchableOpacity style={styles.button}>
@@ -48,16 +47,18 @@ const MapList = (props) => {
             <Item
                 item={item}
                 onPress={() => { }}
-            // index={index} 
             />
         )
     };
 
     return (
         <FlatList
-            data={props.item}
+            data={props.info}
             renderItem={renderItem}
-        // keyExtractor={(item) => item.idnex}
+            onEndReached={props.onEnd}
+            onEndReachedThreshold={0.85}
+            ListFooterComponent={props.loading && <ActivityIndicator size="large" color="#0000ff" />}
+            keyExtractor={(item) => item.contentid}
         />
     )
 }
@@ -65,7 +66,6 @@ const MapList = (props) => {
 const styles = StyleSheet.create({
     button: {
         flexDirection: 'row',
-        backgroundColor: '#fff',
         justifyContent: 'space-between',
         alignItems: 'center',
         marginVertical: 10,

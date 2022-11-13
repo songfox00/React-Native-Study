@@ -16,7 +16,7 @@ const half = screenHeight * 0.55;
 const top = Platform.OS == 'ios' ? 36 : 0;
 const bottom = screenHeight - 60;
 
-export const BottomSheet = () => {
+export const BottomSheetModal = () => {
     const panY = useRef(new Animated.Value(bottom)).current;
     const defaultY = useRef(bottom);
     const translateY = panY.interpolate({
@@ -140,5 +140,3 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
     }
 })
-
-export default BottomSheet;

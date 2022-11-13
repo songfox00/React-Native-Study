@@ -20,9 +20,9 @@ const MainTab = () => {
 const Navigation = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName='MainTab' screenOptions={{ headerShown: false }}>
+            <Stack.Navigator initialRouteName='MainTab' >
                 <Stack.Screen name="MainTab" component={MainTab} />
-                <Stack.Screen name="TourMap" component={TourMap} />
+                <Stack.Screen name="TourMap" component={TourMap} options={{ headerTitle: "플레이스 추천" }} />
             </Stack.Navigator>
 
         </NavigationContainer>

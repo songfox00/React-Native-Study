@@ -6,20 +6,14 @@ import {
     Dimensions,
     PanResponder,
     Platform,
-
 } from 'react-native';
-import MapList from './MapList';
+import PropTypes from 'prop-types';
 
 const screenHeight = Dimensions.get("window").height;
 
-const barHeight = 50;
-const half = screenHeight * 0.55;
-const top = Platform.OS == 'ios' ? 20 : 0;
-const bottom = screenHeight - barHeight;
-
 export const BottomSheet = (props) => {
-    const panY = useRef(new Animated.Value(bottom)).current;
-    const defaultY = useRef(bottom);
+    const panY = useRef(new Animated.Value(props.bottomHeight)).current;
+    const defaultY = useRef(props.bottomHeight);
 
     const translateY = panY.interpolate({
         inputRange: [0, 1],
@@ -27,19 +21,19 @@ export const BottomSheet = (props) => {
     });
 
     const openBottomSheet = Animated.timing(panY, {
-        toValue: top,
+        toValue: props.topHeight,
         duration: 300,
         useNativeDriver: false,
     });
 
     const middleBottomSheet = Animated.timing(panY, {
-        toValue: half,
+        toValue: props.halfHeight,
         duration: 300,
         useNativeDriver: false
     });
 
     const closeBottomSheet = Animated.timing(panY, {
-        toValue: bottom,
+        toValue: props.bottomHeight,
         duration: 300,
         useNativeDriver: false,
     });
@@ -48,30 +42,30 @@ export const BottomSheet = (props) => {
         onStartShouldSetPanResponder: () => true,
         onPanResponderMove: (event, gestureState) => {
             panY.setValue(defaultY.current + gestureState.dy);
-            panY._value <= top ? panY.setValue(top) : null;
+            panY._value <= props.topHeight ? panY.setValue(props.topHeight) : null;
         },
         onPanResponderRelease: (event, gestureState) => {
             if (gestureState.dy > 0) {  //아래로 드래그
-                if (gestureState.moveY <= screenHeight - half) {
+                if (gestureState.moveY <= screenHeight - props.halfHeight) {
                     middleBottomSheet.start(() => {
-                        defaultY.current = half;
+                        defaultY.current = props.halfHeight;
                     });
                 }
                 else {
                     closeBottomSheet.start(() => {
-                        defaultY.current = bottom;
+                        defaultY.current = props.bottomHeight;
                     })
                 }
             }
             else if (gestureState.dy < 0) { //위로 드래그
                 if (gestureState.moveY <= screenHeight * 0.5) {
                     openBottomSheet.start(() => {
-                        defaultY.current = top;
+                        defaultY.current = props.topHeight;
                     });
                 }
                 else {
                     middleBottomSheet.start(() => {
-                        defaultY.current = half;
+                        defaultY.current = props.halfHeight;
                     });
                 }
             }
@@ -84,18 +78,42 @@ export const BottomSheet = (props) => {
 
     return (
         <Animated.View
-            style={[styles.view, { top: translateY, bottom: 0 }]}
+            style={[styles.view, { top: panY, bottom: 0, backgroundColor: props.backgroundColor, borderTopLeftRadius: props.topBorderRadius, borderTopRightRadius: props.topBorderRadius, }]}
         >
-            <View style={styles.bottomSheetPoint}
+            <View style={{ ...styles.bottomSheetPoint, height: props.barHeight }}
                 {...panResponders.panHandlers}
             >
-                <View style={styles.bar} />
+                <View style={{ ...styles.bar, backgroundColor: props.barLineColor, width: props.barLineWidth, height: props.barLineHeight }} />
             </View>
             <View style={{ ...styles.bottomSheetContainer, }}>
-                <MapList item={props.info} />
+                {props.children}
             </View>
         </Animated.View >
     )
+}
+
+BottomSheet.propTypes = {
+    barHeight: PropTypes.number,
+    topHeight: PropTypes.number,
+    halfHeight: PropTypes.number,
+    bottomHeight: PropTypes.number,
+    backgroundColor: PropTypes.string,
+    barLineHeight: PropTypes.number,
+    barLineWidth: PropTypes.number,
+    barLineColor: PropTypes.string,
+    topBorderRadius: PropTypes.number
+}
+
+BottomSheet.defaultProps = {
+    barHeight: 50,
+    topHeight: Platform.OS == 'ios' ? 20 : 0,
+    halfHeight: screenHeight * 0.55,
+    bottomHeight: screenHeight - 50,
+    backgroundColor: '#fff',
+    barLineHeight: 5,
+    barLineWidth: 80,
+    barLineColor: '#999',
+    topBorderRadius: 20
 }
 
 const styles = StyleSheet.create({
@@ -105,23 +123,15 @@ const styles = StyleSheet.create({
         right: 0,
     },
     bar: {
-        backgroundColor: '#999',
         borderRadius: 30,
-        width: 80,
-        height: 5
     },
     bottomSheetPoint: {
-        height: barHeight,
-        backgroundColor: '#fff',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
         borderColor: '#e4e4e4',
         justifyContent: 'center',
         alignItems: 'center',
     },
     bottomSheetContainer: {
         flex: 1,
-        backgroundColor: "#fff",
     },
 })
 
