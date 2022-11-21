@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import {
     View,
     StyleSheet,
@@ -8,17 +8,17 @@ import {
     Platform,
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { useHeaderHeight } from '@react-navigation/elements';
 
 const screenHeight = Dimensions.get("window").height;
 
 export const BottomSheet = (props) => {
-    const panY = useRef(new Animated.Value(props.bottomHeight)).current;
-    const defaultY = useRef(props.bottomHeight);
+    const headerHeight = props.header ? useHeaderHeight() : 0;
+    const bottomHeight = props.bottomHeight - headerHeight;
+    const halfHeight = props.halfHeight - headerHeight;
 
-    const translateY = panY.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, 1],
-    });
+    const panY = useRef(new Animated.Value(bottomHeight)).current;
+    const defaultY = useRef(bottomHeight);
 
     const openBottomSheet = Animated.timing(panY, {
         toValue: props.topHeight,
@@ -27,13 +27,13 @@ export const BottomSheet = (props) => {
     });
 
     const middleBottomSheet = Animated.timing(panY, {
-        toValue: props.halfHeight,
+        toValue: halfHeight,
         duration: 300,
         useNativeDriver: false
     });
 
     const closeBottomSheet = Animated.timing(panY, {
-        toValue: props.bottomHeight,
+        toValue: bottomHeight,
         duration: 300,
         useNativeDriver: false,
     });
@@ -46,14 +46,14 @@ export const BottomSheet = (props) => {
         },
         onPanResponderRelease: (event, gestureState) => {
             if (gestureState.dy > 0) {  //아래로 드래그
-                if (gestureState.moveY <= screenHeight - props.halfHeight) {
+                if (gestureState.moveY <= screenHeight - halfHeight) {
                     middleBottomSheet.start(() => {
-                        defaultY.current = props.halfHeight;
+                        defaultY.current = halfHeight;
                     });
                 }
                 else {
                     closeBottomSheet.start(() => {
-                        defaultY.current = props.bottomHeight;
+                        defaultY.current = bottomHeight;
                     })
                 }
             }
@@ -65,16 +65,12 @@ export const BottomSheet = (props) => {
                 }
                 else {
                     middleBottomSheet.start(() => {
-                        defaultY.current = props.halfHeight;
+                        defaultY.current = halfHeight;
                     });
                 }
             }
         }
     })).current;
-
-    useEffect(() => {
-        closeBottomSheet.start();
-    }, []);
 
     return (
         <Animated.View
@@ -85,7 +81,7 @@ export const BottomSheet = (props) => {
             >
                 <View style={{ ...styles.bar, backgroundColor: props.barLineColor, width: props.barLineWidth, height: props.barLineHeight }} />
             </View>
-            <View style={{ ...styles.bottomSheetContainer, }}>
+            <View style={{ ...styles.bottomSheetContainer }}>
                 {props.children}
             </View>
         </Animated.View >
@@ -101,7 +97,8 @@ BottomSheet.propTypes = {
     barLineHeight: PropTypes.number,
     barLineWidth: PropTypes.number,
     barLineColor: PropTypes.string,
-    topBorderRadius: PropTypes.number
+    topBorderRadius: PropTypes.number,
+    header: PropTypes.bool
 }
 
 BottomSheet.defaultProps = {
@@ -113,7 +110,8 @@ BottomSheet.defaultProps = {
     barLineHeight: 5,
     barLineWidth: 80,
     barLineColor: '#999',
-    topBorderRadius: 20
+    topBorderRadius: 20,
+    header: false
 }
 
 const styles = StyleSheet.create({

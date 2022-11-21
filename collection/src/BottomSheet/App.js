@@ -9,7 +9,7 @@ import BottomSheet from './src/BottomSheet';
 export const App = () => {
     return (
         <View style={styles.rootContainer}>
-            <BottomSheet />
+            <BottomSheet header={true} />
         </View>
     )
 }

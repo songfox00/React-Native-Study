@@ -78,6 +78,12 @@ import org.apache.tools.ant.taskdefs.condition.Os
  * ]
  */
 
+project.ext.vectoricons=[
+    iconiconFontNames:['Ionicons.ttf', 'MaterialCommunityIcons.ttf', 'MaterialIcons.ttf', 'FontAwesome.ttf', 'Entypo.ttf', 'AntDesgin.ttf']
+]
+
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
 project.ext.envConfigFiles=[
     anothercustombuild: ".env"
 ]
@@ -258,6 +264,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(':react-native-vector-icons')
 
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules

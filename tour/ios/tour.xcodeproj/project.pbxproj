@@ -108,6 +108,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		6C77714F2921D0A20069D352 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +125,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				6C77714F2921D0A20069D352 /* Fonts */,
 				6CF5FB6D2910AA0E00BBD4D6 /* File.swift */,
 				6CF5FB6B2910A5A500BBD4D6 /* Config.xcconfig */,
 				13B07FAE1A68108700A75B9A /* tour */,

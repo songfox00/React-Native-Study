@@ -1,90 +1,149 @@
-import React, { createRef, PureComponent } from 'react';
+import React, { PureComponent, createRef } from 'react';
 import {
     View,
-    StyleSheet,
     Animated,
     Dimensions,
     PanResponder,
     Platform,
-
+    StyleSheet
 } from 'react-native';
 import PropTypes from 'prop-types';
+import { Header } from 'react-navigation';
 
 const screenHeight = Dimensions.get("window").height;
 
-class BottomSheetClass extends PureComponent {
+class BottomSheet extends PureComponent {
+    headerHeight = this.props.header ? Header.height : 0;
     state = {
-        panY: new Animated.Value(this.props.bottomHeight),
-        defaultY: this.props.bottomHeight,
-        panResponders: PanResponder.create({
-            onStartShouldSetPanResponder: () => true,
-            onPanResponderMove: (event, gestureState) => {
-                this.state.panY.setValue(this.state.defaultY + gestureState.dy);
-                this.state.panY._value <= this.props.topHeight ? this.state.panY.setValue(this.props.topHeight) : null;
-            },
-            onPanResponderRelease: (event, gestureState) => {
-                if (gestureState.dy > 0) {  //아래로 드래그
-                    if (gestureState.moveY <= screenHeight - this.props.halfHeight) {
-                        this.middleBottomSheet();
-                        this.setState({
-                            defaultY: this.props.halfHeight
-                        })
-                    }
-                    else {
-                        this.closeBottomSheet();
-                        this.setState({
-                            defaultY: this.props.bottomHeight
-                        })
-                    }
+        bottomHeight: this.props.bottomHeight - this.headerHeight,
+        halfHeight: this.props.halfHeight - this.headerHeight,
+        topHeight: this.props.topHeight - this.headerHeight,
+        panY: new Animated.Value(this.props.halfHeight - this.headerHeight),
+    }
+    defaultY = createRef();
+
+    panResponders = PanResponder.create({
+        onStartShouldSetPanResponder: () => true,
+        onPanResponderMove: (event, gestureState) => {
+            this.state.panY.setValue(this.defaultY.current + gestureState.dy);
+            this.state.panY._value <= this.state.topHeight ? this.state.panY.setValue(this.state.topHeight) : null;
+        },
+        onPanResponderRelease: (event, gestureState) => {
+            let moveY = gestureState.moveY - this.headerHeight;
+            if (gestureState.vy <= -0.5) {
+                if (gestureState.vy <= -3.0) {
+                    this.openBottomSheet();
                 }
-                else if (gestureState.dy < 0) { //위로 드래그
-                    if (gestureState.moveY <= screenHeight * 0.5) {
+                else {
+                    if (this.defaultY.current == this.state.bottomHeight) {
+                        this.middleBottomSheet();
+                    }
+                    else if (this.defaultY.current == this.state.halfHeight && moveY >= this.state.halfHeight) {
+                        this.middleBottomSheet();
+                    }
+                    else if (this.defaultY.current == this.state.halfHeight) {
                         this.openBottomSheet();
-                        this.setState({
-                            defaultY: this.props.topHeight
-                        })
+                    }
+                    else if (this.defaultY.current == this.state.topHeight && moveY >= this.state.halfHeight) {
+                        this.middleBottomSheet();
                     }
                     else {
-                        this.middleBottomSheet();
-                        this.setState({
-                            defaultY: this.props.halfHeight
-                        })
+                        this.openBottomSheet();
                     }
                 }
             }
-        })
-    }
-    // translateY = panY.interpolate({
-    //     inputRange: [0, 1],
-    //     outputRange: [0, 1],
-    // });
+            else if (gestureState.vy >= 0.5) {
+                if (gestureState.vy >= 3.0) {
+                    this.closeBottomSheet();
+                }
+                else {
+                    if (this.defaultY.current == this.state.topHeight) {
+                        this.middleBottomSheet();
+                    }
+                    else if (this.defaultY.current == this.state.halfHeight && moveY <= this.state.halfHeight) {
+                        this.middleBottomSheet();
+                    }
+                    else if (this.defaultY.current == this.state.halfHeight) {
+                        this.closeBottomSheet();
+                    }
+                    else if (this.defaultY.current == this.state.bottomHeight && moveY < this.state.halfHeight) {
+                        this.middleBottomSheet();
+                    }
+                    else {
+                        this.closeBottomSheet();
+                    }
+                }
+            }
+            else {
+                if (this.defaultY.current == this.state.bottomHeight) {
+                    if (moveY < this.state.bottomHeight - this.props.boundary && moveY >= this.state.halfHeight) {
+                        this.middleBottomSheet();
+                    }
+                    else if (moveY < this.state.halfHeight) {
+                        this.openBottomSheet();
+                    }
+                    else {
+                        this.closeBottomSheet();
+                    }
+                }
+                else if (this.defaultY.current == this.state.halfHeight) {
+                    if (moveY < this.state.halfHeight - this.props.boundary) {
+                        this.openBottomSheet();
+                    }
+                    else if (moveY > this.state.halfHeight + this.props.barHeight / 2 + this.props.boundary) {
+                        this.closeBottomSheet();
+                    }
+                    else {
+                        this.middleBottomSheet();
+                    }
+                }
+                else {
+                    if ((moveY > this.state.topHeight + this.props.barHeight / 2 + this.props.boundary) && (moveY <= this.state.halfHeight)) {
+                        this.middleBottomSheet();
+                    }
+                    else if (moveY > this.state.halfHeight) {
+                        this.closeBottomSheet();
+                    }
+                    else {
+                        this.openBottomSheet();
+                    }
+                }
+            }
+        }
+    });
 
     componentDidMount() {
-        this.closeBottomSheet();
+        this.defaultY.current = this.state.halfHeight;
     }
 
     openBottomSheet = () => {
         Animated.timing(this.state.panY, {
-            toValue: this.props.topHeight,
+            toValue: this.state.topHeight,
             duration: 300,
             useNativeDriver: false,
-        }).start();
+        }).start(() => {
+            this.defaultY.current = this.state.topHeight;
+        });
     }
 
     middleBottomSheet = () => {
         Animated.timing(this.state.panY, {
-            toValue: this.props.halfHeight,
+            toValue: this.state.halfHeight,
             duration: 300,
             useNativeDriver: false
-        }).start();
+        }).start(() => {
+            this.defaultY.current = this.state.halfHeight;
+        });
     }
 
     closeBottomSheet = () => {
         Animated.timing(this.state.panY, {
-            toValue: this.props.bottomHeight,
+            toValue: this.state.bottomHeight,
             duration: 300,
             useNativeDriver: false,
-        }).start();
+        }).start(() => {
+            this.defaultY.current = this.state.bottomHeight;
+        });
     }
 
     render() {
@@ -92,12 +151,12 @@ class BottomSheetClass extends PureComponent {
             <Animated.View
                 style={[styles.view, { top: this.state.panY, bottom: 0, backgroundColor: this.props.backgroundColor, borderTopLeftRadius: this.props.topBorderRadius, borderTopRightRadius: this.props.topBorderRadius, }]}
             >
-                <View style={{ ...styles.bottomSheetPoint, height: this.props.barHeight }}
-                    {...this.state.panResponders.panHandlers}
+                <View style={{ ...styles.bottomSheetPoint, height: this.props.barHeight, backgroundColor: this.props.backgroundColor, borderTopLeftRadius: this.props.topBorderRadius, borderTopRightRadius: this.props.topBorderRadius, }}
+                    {...this.panResponders.panHandlers}
                 >
                     <View style={{ ...styles.bar, backgroundColor: this.props.barLineColor, width: this.props.barLineWidth, height: this.props.barLineHeight }} />
                 </View>
-                <View style={{ ...styles.bottomSheetContainer, height: this.props.barHeight, }}>
+                <View style={{ ...styles.bottomSheetContainer }}>
                     {this.props.children}
                 </View>
             </Animated.View >
@@ -105,7 +164,7 @@ class BottomSheetClass extends PureComponent {
     }
 }
 
-BottomSheetClass.propTypes = {
+BottomSheet.propTypes = {
     barHeight: PropTypes.number,
     topHeight: PropTypes.number,
     halfHeight: PropTypes.number,
@@ -114,19 +173,23 @@ BottomSheetClass.propTypes = {
     barLineHeight: PropTypes.number,
     barLineWidth: PropTypes.number,
     barLineColor: PropTypes.string,
-    topBorderRadius: PropTypes.number
+    topBorderRadius: PropTypes.number,
+    boundary: PropTypes.number,
+    header: PropTypes.bool
 }
 
-BottomSheetClass.defaultProps = {
-    barHeight: 50,
-    topHeight: Platform.OS == 'ios' ? 20 : 0,
+BottomSheet.defaultProps = {
+    barHeight: 45,
+    topHeight: Platform.OS == 'ios' ? 80 : 60,
     halfHeight: screenHeight * 0.55,
-    bottomHeight: screenHeight - 50,
+    bottomHeight: screenHeight - 45,
     backgroundColor: '#fff',
     barLineHeight: 5,
     barLineWidth: 80,
     barLineColor: '#999',
-    topBorderRadius: 20
+    topBorderRadius: 20,
+    boundary: 20,
+    header: false
 }
 
 const styles = StyleSheet.create({
@@ -142,10 +205,13 @@ const styles = StyleSheet.create({
         borderColor: '#e4e4e4',
         justifyContent: 'center',
         alignItems: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: '#dedede'
     },
     bottomSheetContainer: {
         flex: 1,
     },
 })
 
-export default BottomSheetClass;
+
+export default BottomSheet;
