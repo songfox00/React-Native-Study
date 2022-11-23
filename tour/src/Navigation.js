@@ -3,7 +3,7 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Home from './Home';
+import Home from './Home/Home';
 import TourMap from './TourMap';
 
 const Stack = createStackNavigator();
@@ -21,7 +21,7 @@ const Navigation = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName='MainTab' >
-                <Stack.Screen name="MainTab" component={MainTab} />
+                <Stack.Screen name="MainTab" component={MainTab} options={{ headerShown: false }} />
                 <Stack.Screen name="TourMap" component={TourMap} options={{ headerTitle: "플레이스 추천" }} />
             </Stack.Navigator>
 
