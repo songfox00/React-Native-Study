@@ -70,8 +70,9 @@ const TourMap = ({ route }) => {
                     latitudeDelta: 0.0122,
                     longitudeDelta: 0.01,
                 }}
+                showsUserLocation={true}
             >
-                <Marker
+                {/* <Marker
                     coordinate={{
                         latitude: parseFloat(latitude),
                         longitude: parseFloat(longitude),
@@ -82,7 +83,7 @@ const TourMap = ({ route }) => {
                         style={{ width: 30, height: 30 }}
                         resizeMode="contain"
                     />
-                </Marker>
+                </Marker> */}
                 {pageLoading && location}
             </MapView>
             {pageLoading && <BottomSheet>
