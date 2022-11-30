@@ -17,66 +17,129 @@ export const BottomSheet = (props) => {
     const bottomHeight = props.bottomHeight - headerHeight;
     const halfHeight = props.halfHeight - headerHeight;
 
-    const panY = useRef(new Animated.Value(bottomHeight)).current;
-    const defaultY = useRef(bottomHeight);
-
-    const openBottomSheet = Animated.timing(panY, {
-        toValue: props.topHeight,
-        duration: 300,
-        useNativeDriver: false,
-    });
-
-    const middleBottomSheet = Animated.timing(panY, {
-        toValue: halfHeight,
-        duration: 300,
-        useNativeDriver: false
-    });
-
-    const closeBottomSheet = Animated.timing(panY, {
-        toValue: bottomHeight,
-        duration: 300,
-        useNativeDriver: false,
-    });
+    const panY = useRef(new Animated.Value(halfHeight)).current;
+    const defaultY = useRef(halfHeight);
 
     const panResponders = useRef(PanResponder.create({
         onStartShouldSetPanResponder: () => true,
         onPanResponderMove: (event, gestureState) => {
             panY.setValue(defaultY.current + gestureState.dy);
             panY._value <= props.topHeight ? panY.setValue(props.topHeight) : null;
+            panY._value >= bottomHeight ? panY.setValue(bottomHeight) : null;
         },
         onPanResponderRelease: (event, gestureState) => {
-            if (gestureState.dy > 0) {  //아래로 드래그
-                if (gestureState.moveY <= screenHeight - halfHeight) {
-                    middleBottomSheet.start(() => {
-                        defaultY.current = halfHeight;
-                    });
+            var moveY = gestureState.moveY - headerHeight;
+            if (gestureState.vy <= -0.5) {
+                if (gestureState.vy <= -2.5) {
+                    openBottomSheet();
                 }
                 else {
-                    closeBottomSheet.start(() => {
-                        defaultY.current = bottomHeight;
-                    })
+                    if (defaultY.current == bottomHeight) {
+                        middleBottomSheet();
+                    }
+                    else if (defaultY.current == halfHeight && moveY >= halfHeight) {
+                        middleBottomSheet();
+                    }
+                    else if (defaultY.current == halfHeight) {
+                        openBottomSheet();
+                    }
+                    else {
+                        openBottomSheet();
+                    }
                 }
             }
-            else if (gestureState.dy < 0) { //위로 드래그
-                if (gestureState.moveY <= screenHeight * 0.5) {
-                    openBottomSheet.start(() => {
-                        defaultY.current = props.topHeight;
-                    });
+            else if (gestureState.vy >= 0.5) {
+                if (gestureState.vy >= 2.5) {
+                    closeBottomSheet();
                 }
                 else {
-                    middleBottomSheet.start(() => {
-                        defaultY.current = halfHeight;
-                    });
+                    if (defaultY.current == props.topHeight) {
+                        middleBottomSheet();
+                    }
+                    else if (defaultY.current == halfHeight && moveY <= halfHeight) {
+                        middleBottomSheet();
+                    }
+                    else if (defaultY.current == halfHeight) {
+                        closeBottomSheet();
+                    }
+                    else {
+                        closeBottomSheet();
+                    }
+                }
+            }
+            else {
+                if (defaultY.current == bottomHeight) {
+                    if (moveY < bottomHeight - props.boundary && moveY >= halfHeight + headerHeight) {
+                        middleBottomSheet();
+                    }
+                    else if (moveY < halfHeight) {
+                        openBottomSheet();
+                    }
+                    else {
+                        closeBottomSheet();
+                    }
+                }
+                else if (defaultY.current == halfHeight) {
+                    if (moveY < halfHeight - props.boundary) {
+                        openBottomSheet();
+                    }
+                    else if (moveY > halfHeight + props.barHeight / 2 + props.boundary) {
+                        closeBottomSheet();
+                    }
+                    else {
+                        middleBottomSheet();
+                    }
+                }
+                else {
+                    if ((moveY > props.topHeight + props.barHeight / 2 + props.boundary) && (moveY <= halfHeight)) {
+                        middleBottomSheet();
+                    }
+                    else if (moveY > halfHeight) {
+                        closeBottomSheet();
+                    }
+                    else {
+                        openBottomSheet();
+                    }
                 }
             }
         }
     })).current;
 
+    const openBottomSheet = () => {
+        Animated.timing(panY, {
+            toValue: props.topHeight,
+            duration: 300,
+            useNativeDriver: false,
+        }).start(() => {
+            defaultY.current = props.topHeight;
+        });
+    };
+
+    const middleBottomSheet = () => {
+        Animated.timing(panY, {
+            toValue: halfHeight,
+            duration: 300,
+            useNativeDriver: false
+        }).start(() => {
+            defaultY.current = halfHeight;
+        });
+    };
+
+    const closeBottomSheet = () => {
+        Animated.timing(panY, {
+            toValue: bottomHeight,
+            duration: 300,
+            useNativeDriver: false,
+        }).start(() => {
+            defaultY.current = bottomHeight;
+        });
+    };
+
     return (
         <Animated.View
-            style={[styles.view, { top: panY, bottom: 0, backgroundColor: props.backgroundColor, borderTopLeftRadius: props.topBorderRadius, borderTopRightRadius: props.topBorderRadius, }]}
+            style={[styles.view, { top: panY, backgroundColor: props.backgroundColor, borderTopLeftRadius: props.topBorderRadius, borderTopRightRadius: props.topBorderRadius, }]}
         >
-            <View style={{ ...styles.bottomSheetPoint, height: props.barHeight }}
+            <View style={{ ...styles.bottomSheetPoint, height: props.barHeight, borderTopLeftRadius: props.topBorderRadius, borderTopRightRadius: props.topBorderRadius }}
                 {...panResponders.panHandlers}
             >
                 <View style={{ ...styles.bar, backgroundColor: props.barLineColor, width: props.barLineWidth, height: props.barLineHeight }} />
@@ -98,6 +161,7 @@ BottomSheet.propTypes = {
     barLineWidth: PropTypes.number,
     barLineColor: PropTypes.string,
     topBorderRadius: PropTypes.number,
+    boundary: PropTypes.number,
     header: PropTypes.bool
 }
 
@@ -111,6 +175,7 @@ BottomSheet.defaultProps = {
     barLineWidth: 80,
     barLineColor: '#999',
     topBorderRadius: 20,
+    boundary: 15,
     header: false
 }
 
@@ -119,6 +184,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         right: 0,
+        bottom: 0
     },
     bar: {
         borderRadius: 30,
@@ -127,6 +193,7 @@ const styles = StyleSheet.create({
         borderColor: '#e4e4e4',
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#fff'
     },
     bottomSheetContainer: {
         flex: 1,

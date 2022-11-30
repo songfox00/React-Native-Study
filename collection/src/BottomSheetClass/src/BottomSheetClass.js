@@ -27,11 +27,12 @@ class BottomSheet extends PureComponent {
         onPanResponderMove: (event, gestureState) => {
             this.state.panY.setValue(this.defaultY.current + gestureState.dy);
             this.state.panY._value <= this.state.topHeight ? this.state.panY.setValue(this.state.topHeight) : null;
+            this.state.panY._value >= this.state.bottomHeight ? this.state.panY.setValue(this.state.bottomHeight) : null;
         },
         onPanResponderRelease: (event, gestureState) => {
             let moveY = gestureState.moveY - this.headerHeight;
             if (gestureState.vy <= -0.5) {
-                if (gestureState.vy <= -3.0) {
+                if (gestureState.vy <= -2.5) {
                     this.openBottomSheet();
                 }
                 else {
@@ -53,7 +54,7 @@ class BottomSheet extends PureComponent {
                 }
             }
             else if (gestureState.vy >= 0.5) {
-                if (gestureState.vy >= 3.0) {
+                if (gestureState.vy >= 2.5) {
                     this.closeBottomSheet();
                 }
                 else {
@@ -180,7 +181,7 @@ BottomSheet.propTypes = {
 
 BottomSheet.defaultProps = {
     barHeight: 45,
-    topHeight: Platform.OS == 'ios' ? 80 : 60,
+    topHeight: Platform.OS == 'ios' ? 20 : 0,
     halfHeight: screenHeight * 0.55,
     bottomHeight: screenHeight - 45,
     backgroundColor: '#fff',
@@ -188,7 +189,7 @@ BottomSheet.defaultProps = {
     barLineWidth: 80,
     barLineColor: '#999',
     topBorderRadius: 20,
-    boundary: 20,
+    boundary: 15,
     header: false
 }
 

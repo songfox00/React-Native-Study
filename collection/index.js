@@ -14,4 +14,4 @@ import { App as BottomSheetClassApp } from './src/BottomSheetClass/App';
 
 import { name as appName } from './app.json';
 
-AppRegistry.registerComponent(appName, () => BottomSheetClassApp);
+AppRegistry.registerComponent(appName, () => BottomSheetApp);
