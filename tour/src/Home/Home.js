@@ -87,7 +87,7 @@ const Home = () => {
                         지역별 관광지
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => { }} style={styles.recommendView}>
+                <TouchableOpacity onPress={() => { navigation.navigate('Festival') }} style={styles.recommendView}>
                     <View style={styles.recommendBtn}>
                         <MaterialIcons
                             name="festival"

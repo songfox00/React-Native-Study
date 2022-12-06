@@ -72,18 +72,6 @@ const TourMap = ({ route }) => {
                 }}
                 showsUserLocation={true}
             >
-                {/* <Marker
-                    coordinate={{
-                        latitude: parseFloat(latitude),
-                        longitude: parseFloat(longitude),
-                    }}
-                >
-                    <Image
-                        source={require('./image/cur_loaction.png')}
-                        style={{ width: 30, height: 30 }}
-                        resizeMode="contain"
-                    />
-                </Marker> */}
                 {pageLoading && location}
             </MapView>
             {pageLoading && <BottomSheet>

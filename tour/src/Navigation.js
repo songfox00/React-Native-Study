@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Home from './Home/Home';
 import TourMap from './TourMap';
+import Festival from './Festival';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -23,6 +24,7 @@ const Navigation = () => {
             <Stack.Navigator initialRouteName='MainTab' >
                 <Stack.Screen name="MainTab" component={MainTab} options={{ headerShown: false }} />
                 <Stack.Screen name="TourMap" component={TourMap} options={{ headerTitle: "플레이스 추천" }} />
+                <Stack.Screen name="Festival" component={Festival} options={{ headerTitle: "행사 추천" }} />
             </Stack.Navigator>
 
         </NavigationContainer>
