@@ -8,12 +8,12 @@ import {
     StyleSheet
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { Header } from 'react-navigation';
+import { useHeaderHeight } from '@react-navigation/elements';
 
 const screenHeight = Dimensions.get("window").height;
 
 class BottomSheet extends PureComponent {
-    headerHeight = this.props.header ? Header.height : 0;
+    headerHeight = this.props.header ? useHeaderHeight() : 0;
     state = {
         bottomHeight: this.props.bottomHeight - this.headerHeight,
         halfHeight: this.props.halfHeight - this.headerHeight,

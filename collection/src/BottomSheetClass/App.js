@@ -5,13 +5,12 @@ import {
     Text
 } from 'react-native';
 import BottomSheetClass from './src/BottomSheetClass';
+import NavigationClass from './Navigation';
 
 export class App extends PureComponent {
     render() {
         return (
-            <View style={styles.rootContainer}>
-                <BottomSheetClass />
-            </View>
+            <NavigationClass />
         )
     }
 }
