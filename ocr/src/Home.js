@@ -128,7 +128,7 @@ const Home = () => {
                 source={{ uri: asset[0].uri }}
             />
             {floatingButton()}
-            {visible ? <View style={{ position: 'absolute', right: 0, left: 0, bottom: 0, top: 0, backgroundColor: '#d4d4d4', ...StyleSheet.absoluteFillObject }}></View> : <></>}
+            {visible ? <View style={{ position: 'absolute', right: 0, left: 0, bottom: 0, top: 0, backgroundColor: '#d4d4d4aa', ...StyleSheet.absoluteFillObject }}></View> : <></>}
             {modal()}
         </SafeAreaView>
     )
@@ -193,9 +193,9 @@ const styles = StyleSheet.create({
     },
     image: {
         marginHorizontal: 15,
-        marginTop: 20,
-        // width: screenWidth - 30,
-        // height: screenHeight - 100,
+        marginVertical: 20,
+        width: screenWidth - 30,
+        height: screenHeight * 3 / 4
     }
 })
 
