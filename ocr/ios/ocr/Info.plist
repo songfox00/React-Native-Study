@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string></string>
+	<string>App needs to access Photo</string>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>App needs to access Camera</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string></string>
+	<string>App needs to access Microphone</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
